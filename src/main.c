@@ -3,9 +3,9 @@
 #include "save.h"
 #include "screen.h"
 
-int main() // Ö÷º¯Êý
+int main() // ä¸»å‡½æ•°
 {
-    // ±äÁ¿ÉùÃ÷
+    // å˜é‡å£°æ˜Ž
     node *head, *last, *now, *tmp;
     game_info game;
     game_info *game_pointer = &game;
@@ -21,18 +21,18 @@ int main() // Ö÷º¯Êý
     char programinput;
     FILE *inputline;
 
-begin: // ½áËãÌø×ª,³õÊ¼»¯±äÁ¿
+begin: // ç»“ç®—è·³è½¬,åˆå§‹åŒ–å˜é‡
     memset(head->map.map_num, 0, 10000);
     memset(head->map.map_char, '\0', 10000);
     saveimport(head, game_pointer);
     last = head;
     save_screen = 1;
 
-    // ¿ªÊ¼½çÃæ
+    // å¼€å§‹ç•Œé¢
     screen = movescreen(4, game_pointer, &head->player);
     if (screen == 4)
         exit(0);
-    // Ñ¡ÔñÄ£Ê½
+    // é€‰æ‹©æ¨¡å¼
     if (screen == game_pointer->last_game && head->player.treasure_found != head->player.treasure_num)
         save_screen = movescreen(3, game_pointer, &head->player);
     if (save_screen == 2 || screen != game_pointer->last_game || head->player.treasure_found == head->player.treasure_num)
@@ -49,56 +49,56 @@ begin: // ½áËãÌø×ª,³õÊ¼»¯±äÁ¿
     game.last_game = screen;
     inputline = fopen("..\\build\\save.txt", "w+");
     fclose(inputline);
-    // ½øÐÐÓÎÏ·
-    if (game.mode == 1) // ÊµÊ±Ä£Ê½
+    // è¿›è¡Œæ¸¸æˆ
+    if (game.mode == 1) // å®žæ—¶æ¨¡å¼
     {
         printmap(&last->map);
-        printf("¿ØÖÆ·½·¨£º°´WÏòÉÏÒÆ¶¯£¬°´SÏòÏÂÒÆ¶¯£¬°´AÏò×óÒÆ¶¯£¬°´DÏòÓÒÒÆ¶¯£¬°´IÔ­µØ²»¶¯£¬°´Z³·Ïú²Ù×÷£¬°´Y»Ö¸´²Ù×÷£¬°´Q½áÊøÃ°ÏÕ¡£\n");
+        printf("æŽ§åˆ¶æ–¹æ³•ï¼šæŒ‰Wå‘ä¸Šç§»åŠ¨ï¼ŒæŒ‰Så‘ä¸‹ç§»åŠ¨ï¼ŒæŒ‰Aå‘å·¦ç§»åŠ¨ï¼ŒæŒ‰Då‘å³ç§»åŠ¨ï¼ŒæŒ‰IåŽŸåœ°ä¸åŠ¨ï¼ŒæŒ‰Zæ’¤é”€æ“ä½œï¼ŒæŒ‰Yæ¢å¤æ“ä½œï¼ŒæŒ‰Qç»“æŸå†’é™©ã€‚\n");
         while (last->player.can_exit == 0)
         {
             last->move.ifcorrect = 1;
             last->move.input = toupper(getch());
             movement(&last);
             printmap(&last->map);
-            printf("ÏûºÄµÄÌåÁ¦£º%d\n", last->player.manual_spend);
-            printf("¿ØÖÆ·½·¨£º°´WÏòÉÏÒÆ¶¯£¬°´SÏòÏÂÒÆ¶¯£¬°´AÏò×óÒÆ¶¯£¬°´DÏòÓÒÒÆ¶¯£¬°´IÔ­µØ²»¶¯£¬°´Z³·Ïú²Ù×÷£¬°´Y»Ö¸´²Ù×÷£¬°´Q½áÊøÃ°ÏÕ¡£\n");
-            if (last->move.ifcorrect == 0) // ÊµÊ±Ä£Ê½ÊäÈë´íÎó
+            printf("æ¶ˆè€—çš„ä½“åŠ›ï¼š%d\n", last->player.manual_spend);
+            printf("æŽ§åˆ¶æ–¹æ³•ï¼šæŒ‰Wå‘ä¸Šç§»åŠ¨ï¼ŒæŒ‰Så‘ä¸‹ç§»åŠ¨ï¼ŒæŒ‰Aå‘å·¦ç§»åŠ¨ï¼ŒæŒ‰Då‘å³ç§»åŠ¨ï¼ŒæŒ‰IåŽŸåœ°ä¸åŠ¨ï¼ŒæŒ‰Zæ’¤é”€æ“ä½œï¼ŒæŒ‰Yæ¢å¤æ“ä½œï¼ŒæŒ‰Qç»“æŸå†’é™©ã€‚\n");
+            if (last->move.ifcorrect == 0) // å®žæ—¶æ¨¡å¼è¾“å…¥é”™è¯¯
             {
-                printf("ÊäÈë´íÎó£¬ÇëÖØÐÂÊäÈë£¡\n");
+                printf("è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼\n");
             }
         }
     }
-    else // ±à³ÌÄ£Ê½
+    else // ç¼–ç¨‹æ¨¡å¼
     {
         printmap(&last->map);
-        printf("¿ØÖÆ·½·¨£º°´WÏòÉÏÒÆ¶¯£¬°´SÏòÏÂÒÆ¶¯£¬°´AÏò×óÒÆ¶¯£¬°´DÏòÓÒÒÆ¶¯£¬°´IÔ­µØ²»¶¯£¬°´Z³·Ïú²Ù×÷£¬°´Y»Ö¸´²Ù×÷£¬°´Q½áÊøÃ°ÏÕ£¬°´<Enter>ÊäÈë¡£\n");
+        printf("æŽ§åˆ¶æ–¹æ³•ï¼šæŒ‰Wå‘ä¸Šç§»åŠ¨ï¼ŒæŒ‰Så‘ä¸‹ç§»åŠ¨ï¼ŒæŒ‰Aå‘å·¦ç§»åŠ¨ï¼ŒæŒ‰Då‘å³ç§»åŠ¨ï¼ŒæŒ‰IåŽŸåœ°ä¸åŠ¨ï¼ŒæŒ‰Zæ’¤é”€æ“ä½œï¼ŒæŒ‰Yæ¢å¤æ“ä½œï¼ŒæŒ‰Qç»“æŸå†’é™©ï¼ŒæŒ‰<Enter>è¾“å…¥ã€‚\n");
         while (last->player.can_exit == 0)
         {
-            inputline = fopen("..\\build\\inputline.txt", "w+"); // ½ÓÊÜÊäÈë
+            inputline = fopen("..\\build\\inputline.txt", "w+"); // æŽ¥å—è¾“å…¥
             while ((programinput = getch()) != '\r')
             {
                 fprintf(inputline, "%c", programinput);
             }
             fflush(NULL);
-            fseek(inputline, 0L, 0);                              // ¹â±êÖØÖÃ
-            while (fscanf(inputline, "%c", &programinput) != EOF) // ·ÖÎöÊäÈë
+            fseek(inputline, 0L, 0);                              // å…‰æ ‡é‡ç½®
+            while (fscanf(inputline, "%c", &programinput) != EOF) // åˆ†æžè¾“å…¥
             {
                 last->move.column_move = last->move.row_move = 0;
                 last->move.input = toupper(programinput);
                 movement(&last);
-                if (last->move.ifcorrect == 0) // ±à³ÌÄ£Ê½ÊäÈë´íÎóÖ±½Ó½áÊøÓÎÏ·
+                if (last->move.ifcorrect == 0) // ç¼–ç¨‹æ¨¡å¼è¾“å…¥é”™è¯¯ç›´æŽ¥ç»“æŸæ¸¸æˆ
                     goto close;
             }
             printmap(&last->map);
-            printf("ÏûºÄµÄÌåÁ¦£º%d\n", last->player.manual_spend);
-            printf("¿ØÖÆ·½·¨£º°´WÏòÉÏÒÆ¶¯£¬°´SÏòÏÂÒÆ¶¯£¬°´AÏò×óÒÆ¶¯£¬°´DÏòÓÒÒÆ¶¯£¬°´IÔ­µØ²»¶¯£¬°´Z³·Ïú²Ù×÷£¬°´Y»Ö¸´²Ù×÷£¬°´Q½áÊøÃ°ÏÕ£¬°´<Enter>ÊäÈë¡£\n");
+            printf("æ¶ˆè€—çš„ä½“åŠ›ï¼š%d\n", last->player.manual_spend);
+            printf("æŽ§åˆ¶æ–¹æ³•ï¼šæŒ‰Wå‘ä¸Šç§»åŠ¨ï¼ŒæŒ‰Så‘ä¸‹ç§»åŠ¨ï¼ŒæŒ‰Aå‘å·¦ç§»åŠ¨ï¼ŒæŒ‰Då‘å³ç§»åŠ¨ï¼ŒæŒ‰IåŽŸåœ°ä¸åŠ¨ï¼ŒæŒ‰Zæ’¤é”€æ“ä½œï¼ŒæŒ‰Yæ¢å¤æ“ä½œï¼ŒæŒ‰Qç»“æŸå†’é™©ï¼ŒæŒ‰<Enter>è¾“å…¥ã€‚\n");
         }
     }
 close:
-    fflush(NULL); // ´òÓ¡½á¹û
+    fflush(NULL); // æ‰“å°ç»“æžœ
     system("cls");
-    printf("¹§Ï²Äã\n\n");
-    printf("ÐÐ¶¯Â·¾¶£º");
+    printf("æ­å–œä½ \n\n");
+    printf("è¡ŒåŠ¨è·¯å¾„ï¼š");
     now = head;
     while (1)
     {
@@ -107,9 +107,9 @@ close:
         if (now == last->next)
             break;
     }
-    printf("\nÏûºÄÌåÁ¦£º%d\n", last->player.manual_spend);
-    printf("ÕÒµ½µÄ±¦ÏäÊýÁ¿£º%d/%d\n\n", last->player.treasure_found, last->player.treasure_num);
-    if (last->player.treasure_found == last->player.treasure_num) // ¼ÇÂ¼¹Ø¿¨Íê³É
+    printf("\næ¶ˆè€—ä½“åŠ›ï¼š%d\n", last->player.manual_spend);
+    printf("æ‰¾åˆ°çš„å®ç®±æ•°é‡ï¼š%d/%d\n\n", last->player.treasure_found, last->player.treasure_num);
+    if (last->player.treasure_found == last->player.treasure_num) // è®°å½•å…³å¡å®Œæˆ
     {
         switch (game.last_game)
         {
@@ -126,17 +126,17 @@ close:
             break;
         }
     }
-    printf("<°´ÈÎÒâ¼ü¼ÌÐø>\n");
+    printf("<æŒ‰ä»»æ„é”®ç»§ç»­>\n");
     savefile(last, game_pointer);
 
     tmp = last->prev;
-    while (tmp != NULL) // ÊÍ·ÅÄÚ´æ
+    while (tmp != NULL) // é‡Šæ”¾å†…å­˜
     {
         free(last);
         last = tmp;
         tmp = last->prev;
     }
-    if (getch() != '\0') // »Øµ½¿ªÊ¼
+    if (getch() != '\0') // å›žåˆ°å¼€å§‹
         goto begin;
     return 0;
 }
